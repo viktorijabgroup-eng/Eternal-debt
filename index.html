@@ -1,0 +1,675 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#15171c">
+<title>Eternal Debt Alpha 0.1</title>
+
+<style>
+*{box-sizing:border-box}
+body{
+  margin:0;
+  font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+  background:#101216;
+  color:white;
+}
+.app{
+  max-width:520px;
+  margin:auto;
+  padding:18px;
+  min-height:100vh;
+}
+h1{margin:8px 0 2px;font-size:32px}
+.sub{color:#9da3ae;font-size:13px;margin-bottom:16px}
+
+.stats{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:10px;
+}
+.card{
+  background:#1a1d23;
+  border:1px solid #323741;
+  border-radius:20px;
+  padding:15px;
+}
+.label{font-size:11px;color:#9399a5}
+.value{font-size:25px;font-weight:800;margin-top:4px}
+
+.panel{
+  background:#1a1d23;
+  border:1px solid #323741;
+  border-radius:20px;
+  padding:15px;
+  margin-top:12px;
+}
+.row{
+  display:flex;
+  justify-content:space-between;
+  gap:10px;
+  align-items:center;
+}
+.small{font-size:12px;color:#9da3ae}
+
+button{
+  border:0;
+  border-radius:14px;
+  padding:13px 15px;
+  font-size:15px;
+  font-weight:750;
+  background:#30343d;
+  color:white;
+}
+button.primary{
+  background:#f6f6f6;
+  color:#111;
+}
+button:disabled{opacity:.3}
+
+.job{
+  background:#1a1d23;
+  border:1px solid #323741;
+  border-radius:20px;
+  padding:15px;
+  margin-top:10px;
+}
+.jobTitle{font-size:19px;font-weight:800}
+.actions{
+  display:flex;
+  gap:8px;
+  flex-wrap:wrap;
+  margin-top:10px;
+}
+.hidden{display:none}
+
+.bar{
+  height:8px;
+  background:#30343d;
+  border-radius:20px;
+  overflow:hidden;
+  margin:14px 0;
+}
+.fill{
+  height:100%;
+  width:0%;
+  background:white;
+  transition:.25s;
+}
+.stage{
+  padding:13px;
+  border-radius:15px;
+  border:1px solid #343943;
+  background:#22252b;
+  margin-top:10px;
+}
+.stage.done{opacity:.4}
+
+.bill{
+  padding:12px 0;
+  border-bottom:1px solid #30343d;
+}
+.green{color:#a9efb6}
+.red{color:#ffaaaa}
+.orange{color:#ffd38c}
+</style>
+</head>
+
+<body>
+
+<div class="app">
+
+<h1>Eternal Debt</h1>
+<div class="sub">ALPHA 0.1 · survive 20 days</div>
+
+<div class="stats">
+
+<div class="card">
+<div class="label">DAY</div>
+<div id="day" class="value">1 / 20</div>
+</div>
+
+<div class="card">
+<div class="label">TIME</div>
+<div id="time" class="value">07:00</div>
+</div>
+
+<div class="card">
+<div class="label">CASH</div>
+<div id="cash" class="value">€300</div>
+</div>
+
+<div class="card">
+<div class="label">DEBT</div>
+<div id="debt" class="value">€2,434</div>
+</div>
+
+<div class="card">
+<div class="label">ENERGY</div>
+<div id="energy" class="value">100 ⚡</div>
+</div>
+
+</div>
+
+<div id="home">
+
+<div class="panel">
+<div class="row">
+<div>
+<b>Today</b>
+<div class="small">07:00–23:00</div>
+</div>
+
+<button onclick="sleep()">Sleep →</button>
+</div>
+</div>
+
+<div id="jobs"></div>
+
+<div class="panel">
+<b>Debt Center</b>
+<div class="small">Choose what you pay and what you postpone.</div>
+<div id="bills"></div>
+</div>
+
+</div>
+
+<div id="work" class="panel hidden">
+
+<div class="row">
+<div>
+<div class="label">CURRENT JOB</div>
+<div id="workTitle" class="jobTitle"></div>
+</div>
+
+<div>
+<div class="label">TIME</div>
+<div id="workTime" class="value"></div>
+</div>
+</div>
+
+<div class="bar">
+<div id="progress" class="fill"></div>
+</div>
+
+<div id="stages"></div>
+
+</div>
+
+<div id="event" class="panel hidden"></div>
+
+<div id="ending" class="panel hidden"></div>
+
+</div>
+
+<script>
+
+const money=n=>"€"+Math.round(n).toLocaleString();
+
+let game={
+ day:1,
+ time:420,
+ cash:300,
+ energy:100,
+ working:false,
+ earned:0,
+ paid:0,
+ jobsDone:0,
+ bills:[
+  {name:"Starting debt",amount:2000,due:30},
+  {name:"Mirror repair",amount:434,due:7}
+ ]
+};
+
+const jobs=[
+
+{
+ name:"🧺 Industrial Laundry",
+ hours:8,
+ energy:55,
+ pay:260,
+ unlock:1,
+ stages:[
+  ["Sort laundry",80,["Whites","Colors","Towels"]],
+  ["Load washers",80,["Washer A","Washer B","Washer C"]],
+  ["Add detergent",60,["Dose A","Dose B"]],
+  ["Choose programs",80,["Cotton","Towels","Delicate"]],
+  ["Move to dryers",100,["Dryer A","Dryer B","Dryer C"]],
+  ["Fold & pack",80,["Fold","Stack","Pack"]]
+ ]
+},
+
+{
+ name:"🧹 Apartment Cleaning",
+ hours:4,
+ energy:25,
+ pay:120,
+ unlock:1,
+ stages:[
+  ["Collect laundry",45,["Sheets","Towels","Trash"]],
+  ["Bathroom",55,["Sink","Mirror","Shower"]],
+  ["Make bed",50,["Sheet","Duvet","Pillows"]],
+  ["Kitchen",45,["Dishes","Counter","Bin"]],
+  ["Final check",45,["Vacuum","Towels","Keys"]]
+ ]
+},
+
+{
+ name:"☕ Café Shift",
+ hours:8,
+ energy:60,
+ pay:240,
+ unlock:1,
+ stages:[
+  ["Open station",80,["Machine","Milk","Cups"]],
+  ["Breakfast rush",100,["Espresso","Latte","Toast"]],
+  ["Lunch rush",120,["Order 1","Order 2","Order 3"]],
+  ["Restock",70,["Beans","Milk","Napkins"]],
+  ["Afternoon",70,["Coffee","Cake","Bill"]],
+  ["Close",40,["Clean","Cash","Lock"]]
+ ]
+},
+
+{
+ name:"🔑 Guest Check-in",
+ hours:2,
+ energy:15,
+ pay:85,
+ unlock:3,
+ stages:[
+  ["Prepare",30,["Keys"]],
+  ["Meet guest",40,["Welcome"]],
+  ["Apartment tour",30,["Kitchen","Wi-Fi"]],
+  ["Finish",20,["Message"]]
+ ]
+},
+
+{
+ name:"🚗 Delivery Run",
+ hours:3,
+ energy:25,
+ pay:110,
+ unlock:5,
+ stages:[
+  ["Pickup",40,["Collect"]],
+  ["Route",60,["Stop 1"]],
+  ["Second stop",50,["Stop 2"]],
+  ["Delivery",30,["Drop off"]]
+ ]
+},
+
+{
+ name:"🧽 Office Cleaning",
+ hours:5,
+ energy:35,
+ pay:155,
+ unlock:7,
+ stages:[
+  ["Trash",50,["Bins"]],
+  ["Desks",70,["Wipe"]],
+  ["Kitchen",60,["Clean"]],
+  ["Bathrooms",70,["Wash"]],
+  ["Floor",50,["Vacuum"]]
+ ]
+}
+
+];
+
+const events=[
+ ["🚗 Workshop bill",459,5],
+ ["🚦 Traffic fine",100,15],
+ ["📱 Broken phone",280,6],
+ ["🧾 Quarterly taxes",1200,10],
+ ["🏠 Rent balance",380,8],
+ ["💳 Credit card",720,12],
+ ["🔧 Appliance repair",330,7],
+ ["📦 Client refund",410,5]
+];
+
+function fmt(m){
+ let h=Math.floor(m/60);
+ let mm=m%60;
+ return String(h).padStart(2,"0")+":"+String(mm).padStart(2,"0");
+}
+
+function debt(){
+ return game.bills.reduce((a,b)=>a+b.amount,0);
+}
+
+function render(){
+
+ document.getElementById("day").textContent=game.day+" / 20";
+ document.getElementById("time").textContent=fmt(game.time);
+ document.getElementById("cash").textContent=money(game.cash);
+ document.getElementById("debt").textContent=money(debt());
+ document.getElementById("energy").textContent=game.energy+" ⚡";
+
+ renderJobs();
+ renderBills();
+
+ localStorage.setItem("eternalDebt",JSON.stringify(game));
+}
+
+function renderJobs(){
+
+ let box=document.getElementById("jobs");
+ box.innerHTML="";
+
+ jobs.filter(j=>game.day>=j.unlock).forEach((j,index)=>{
+
+ let minutes=j.hours*60;
+
+ let available=
+ !game.working &&
+ game.energy>=j.energy &&
+ game.time+minutes<=1380;
+
+ let div=document.createElement("div");
+ div.className="job";
+
+ div.innerHTML=
+ `<div class="jobTitle">${j.name}</div>
+ <div class="small">${j.hours}h · −${j.energy} ⚡ · +${money(j.pay)}</div>`;
+
+ let btn=document.createElement("button");
+ btn.className="primary";
+ btn.style.marginTop="10px";
+ btn.textContent=available?"START":"UNAVAILABLE";
+ btn.disabled=!available;
+
+ btn.onclick=()=>startJob(j);
+
+ div.appendChild(btn);
+ box.appendChild(div);
+
+ });
+
+}
+
+function startJob(job){
+
+ game.working=true;
+ game.energy-=job.energy;
+
+ document.getElementById("home").classList.add("hidden");
+ document.getElementById("work").classList.remove("hidden");
+
+ document.getElementById("workTitle").textContent=job.name;
+ document.getElementById("workTime").textContent=fmt(game.time);
+
+ buildStages(job);
+
+}
+
+function buildStages(job){
+
+ let box=document.getElementById("stages");
+ box.innerHTML="";
+
+ let finished=0;
+
+ job.stages.forEach((stage,index)=>{
+
+ let div=document.createElement("div");
+ div.className="stage";
+
+ div.innerHTML=`<b>${index+1}. ${stage[0]}</b>`;
+
+ let actions=document.createElement("div");
+ actions.className="actions";
+
+ let taps=0;
+
+ stage[2].forEach(label=>{
+
+  let b=document.createElement("button");
+  b.textContent=label;
+
+  b.onclick=()=>{
+
+   if(b.disabled)return;
+
+   b.disabled=true;
+   b.textContent="✓ "+label;
+
+   taps++;
+
+   if(taps===stage[2].length){
+
+    div.classList.add("done");
+
+    game.time+=stage[1];
+
+    finished++;
+
+    document.getElementById("workTime").textContent=fmt(game.time);
+
+    document.getElementById("progress").style.width=
+    (finished/job.stages.length*100)+"%";
+
+    if(finished===job.stages.length){
+     finishJob(job);
+    }
+
+   }
+
+  };
+
+  actions.appendChild(b);
+
+ });
+
+ div.appendChild(actions);
+ box.appendChild(div);
+
+ });
+
+}
+
+function finishJob(job){
+
+ game.cash+=job.pay;
+ game.earned+=job.pay;
+ game.jobsDone++;
+
+ setTimeout(()=>{
+
+  game.working=false;
+
+  document.getElementById("work").classList.add("hidden");
+  document.getElementById("home").classList.remove("hidden");
+
+  document.getElementById("progress").style.width="0%";
+
+  showEvent(
+   "SHIFT COMPLETE",
+   `${job.name}<br><span class="green">+${money(job.pay)}</span>`
+  );
+
+  render();
+
+ },600);
+
+}
+
+function renderBills(){
+
+ let box=document.getElementById("bills");
+ box.innerHTML="";
+
+ game.bills.forEach((bill,index)=>{
+
+ let days=bill.due-game.day;
+
+ let status=
+ days<0
+ ?`<span class="red">OVERDUE ${-days}d</span>`
+ :days===0
+ ?`<span class="orange">DUE TODAY</span>`
+ :`Due in ${days}d`;
+
+ let div=document.createElement("div");
+ div.className="bill";
+
+ div.innerHTML=
+ `<div class="row">
+ <div>
+ <b>${bill.name}</b>
+ <div class="small">${status}</div>
+ </div>
+ <b>${money(bill.amount)}</b>
+ </div>`;
+
+ let actions=document.createElement("div");
+ actions.className="actions";
+
+ let pay=document.createElement("button");
+ pay.textContent="PAY NOW";
+ pay.disabled=game.cash<bill.amount;
+
+ pay.onclick=()=>payBill(index,bill.amount);
+
+ let partial=document.createElement("button");
+ partial.textContent="PAY €100";
+ partial.disabled=game.cash<100 || bill.amount<100;
+
+ partial.onclick=()=>payBill(index,100);
+
+ let later=document.createElement("button");
+ later.textContent="PAY LATER";
+
+ actions.append(pay,partial,later);
+
+ div.appendChild(actions);
+ box.appendChild(div);
+
+ });
+
+}
+
+function payBill(index,amount){
+
+ let b=game.bills[index];
+
+ amount=Math.min(amount,b.amount);
+
+ game.cash-=amount;
+ game.paid+=amount;
+ b.amount-=amount;
+
+ if(b.amount<=0){
+  game.bills.splice(index,1);
+ }
+
+ render();
+
+}
+
+function sleep(){
+
+ if(game.day>=20){
+  finishGame();
+  return;
+ }
+
+ game.day++;
+ game.time=420;
+ game.energy=100;
+
+ if(game.day%2===0){
+
+  let e=events[(game.day/2-1)%events.length];
+
+  game.bills.push({
+   name:e[0],
+   amount:e[1],
+   due:game.day+e[2]
+  });
+
+  showEvent(
+   "NEW BILL",
+   `${e[0]}<br><b>${money(e[1])}</b><br>
+   <span class="small">Pay before Day ${game.day+e[2]}</span>`
+  );
+
+ }
+
+ game.bills.forEach(b=>{
+
+  if(game.day===b.due+1){
+   let fee=Math.max(10,Math.round(b.amount*.05));
+   b.amount+=fee;
+  }
+
+ });
+
+ render();
+
+}
+
+function showEvent(title,text){
+
+ let e=document.getElementById("event");
+
+ e.innerHTML=
+ `<b>${title}</b>
+ <div style="margin-top:8px">${text}</div>`;
+
+ e.classList.remove("hidden");
+
+ setTimeout(()=>{
+  e.classList.add("hidden");
+ },2500);
+
+}
+
+function finishGame(){
+
+ document.getElementById("home").classList.add("hidden");
+
+ let end=document.getElementById("ending");
+ end.classList.remove("hidden");
+
+ end.innerHTML=
+ `<h2>20 DAYS SURVIVED</h2>
+
+ <p>Cash: <b>${money(game.cash)}</b></p>
+ <p>Debt: <b>${money(debt())}</b></p>
+ <p>Total earned: <b>${money(game.earned)}</b></p>
+ <p>Debt paid: <b>${money(game.paid)}</b></p>
+ <p>Jobs completed: <b>${game.jobsDone}</b></p>
+
+ <button class="primary" onclick="restart()">PLAY AGAIN</button>`;
+}
+
+function restart(){
+ localStorage.removeItem("eternalDebt");
+ location.reload();
+}
+
+let saved=localStorage.getItem("eternalDebt");
+
+if(saved){
+ try{
+  game=JSON.parse(saved);
+ }catch(e){}
+}
+
+setInterval(()=>{
+
+ if(!game.working && game.time<1380){
+
+  game.time++;
+
+  document.getElementById("time").textContent=fmt(game.time);
+
+ }
+
+},1000);
+
+render();
+
+</script>
+
+</body>
+</html>
