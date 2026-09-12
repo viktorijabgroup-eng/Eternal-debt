@@ -3,115 +3,250 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<meta name="theme-color" content="#15171c">
-<title>Eternal Debt Alpha 0.1</title>
+<meta name="theme-color" content="#11131a">
+<title>Eternal Debt Alpha 0.3</title>
 
 <style>
 *{box-sizing:border-box}
+
+:root{
+  --bg:#101216;
+  --card:#1a1d23;
+  --border:#323741;
+  --text:#fff;
+  --muted:#9da3ae;
+}
+
 body{
   margin:0;
   font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
-  background:#101216;
-  color:white;
+  background:var(--bg);
+  color:var(--text);
 }
+
 .app{
   max-width:520px;
   margin:auto;
-  padding:18px;
+  padding:16px;
   min-height:100vh;
 }
-h1{margin:8px 0 2px;font-size:32px}
-.sub{color:#9da3ae;font-size:13px;margin-bottom:16px}
+
+.hero{
+  border:1px solid var(--border);
+  border-radius:24px;
+  padding:16px;
+  margin-bottom:12px;
+  transition:background 1s ease;
+  overflow:hidden;
+}
+
+.hero.morning{
+  background:linear-gradient(180deg,#e9a96c,#677f9f);
+}
+
+.hero.day{
+  background:linear-gradient(180deg,#4c9bd0,#b4dcf2);
+}
+
+.hero.evening{
+  background:linear-gradient(180deg,#df8759,#6d557d);
+}
+
+.hero.night{
+  background:linear-gradient(180deg,#1e2440,#0c101d);
+}
+
+.header{
+  display:flex;
+  justify-content:space-between;
+  gap:10px;
+  align-items:center;
+  margin-bottom:14px;
+}
+
+h1{
+  margin:0;
+  font-size:31px;
+}
+
+.sub{
+  color:rgba(255,255,255,.72);
+  font-size:13px;
+  margin-top:3px;
+}
 
 .stats{
   display:grid;
   grid-template-columns:1fr 1fr;
-  gap:10px;
+  gap:9px;
 }
+
+.card,
+.panel,
+.job,
+.bill,
+.stage,
+.result{
+  background:rgba(26,29,35,.94);
+  border:1px solid var(--border);
+  border-radius:19px;
+}
+
 .card{
-  background:#1a1d23;
-  border:1px solid #323741;
-  border-radius:20px;
-  padding:15px;
+  padding:14px;
 }
-.label{font-size:11px;color:#9399a5}
-.value{font-size:25px;font-weight:800;margin-top:4px}
+
+.label{
+  font-size:11px;
+  color:var(--muted);
+}
+
+.value{
+  font-size:24px;
+  font-weight:800;
+  margin-top:4px;
+}
 
 .panel{
-  background:#1a1d23;
-  border:1px solid #323741;
-  border-radius:20px;
   padding:15px;
-  margin-top:12px;
+  margin-top:11px;
 }
+
 .row{
   display:flex;
   justify-content:space-between;
   gap:10px;
   align-items:center;
 }
-.small{font-size:12px;color:#9da3ae}
 
-button{
-  border:0;
-  border-radius:14px;
-  padding:13px 15px;
-  font-size:15px;
-  font-weight:750;
-  background:#30343d;
-  color:white;
+.small{
+  font-size:12px;
+  color:var(--muted);
 }
-button.primary{
-  background:#f6f6f6;
-  color:#111;
+
+.jobs{
+  margin-top:10px;
 }
-button:disabled{opacity:.3}
 
 .job{
-  background:#1a1d23;
-  border:1px solid #323741;
-  border-radius:20px;
   padding:15px;
   margin-top:10px;
 }
-.jobTitle{font-size:19px;font-weight:800}
+
+.jobTitle{
+  font-size:19px;
+  font-weight:800;
+}
+
 .actions{
   display:flex;
   gap:8px;
   flex-wrap:wrap;
   margin-top:10px;
 }
-.hidden{display:none}
+
+button{
+  border:1px solid #3b404b;
+  border-radius:14px;
+  padding:12px 14px;
+  font-size:15px;
+  font-weight:750;
+  background:#30343d;
+  color:white;
+}
+
+button.primary{
+  background:white;
+  color:#111;
+}
+
+button.green{
+  background:#183c2b;
+  border-color:#287c54;
+  color:#b9ffd8;
+}
+
+button:disabled{
+  opacity:.28;
+}
+
+.hidden{
+  display:none!important;
+}
 
 .bar{
   height:8px;
   background:#30343d;
-  border-radius:20px;
+  border-radius:99px;
   overflow:hidden;
   margin:14px 0;
 }
+
 .fill{
   height:100%;
-  width:0%;
-  background:white;
+  width:0;
+  background:#6ce3a6;
   transition:.25s;
 }
+
 .stage{
   padding:13px;
-  border-radius:15px;
-  border:1px solid #343943;
-  background:#22252b;
   margin-top:10px;
 }
-.stage.done{opacity:.4}
+
+.stage.done{
+  opacity:.4;
+}
 
 .bill{
-  padding:12px 0;
-  border-bottom:1px solid #30343d;
+  padding:12px;
+  margin-top:9px;
 }
-.green{color:#a9efb6}
-.red{color:#ffaaaa}
-.orange{color:#ffd38c}
+
+.greenText{
+  color:#75e8a9;
+}
+
+.red{
+  color:#ffaaaa;
+}
+
+.orange{
+  color:#ffd38c;
+}
+
+.result{
+  padding:18px;
+  margin-top:12px;
+}
+
+.resultTop{
+  display:flex;
+  justify-content:space-between;
+  gap:15px;
+}
+
+.resultGain{
+  color:#75e8a9;
+  font-size:25px;
+  font-weight:850;
+}
+
+.resultGrid{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:9px;
+  margin-top:14px;
+}
+
+.newDay{
+  text-align:center;
+  padding:22px;
+}
+
+.lang{
+  min-width:55px;
+}
 </style>
 </head>
 
@@ -119,73 +254,102 @@ button:disabled{opacity:.3}
 
 <div class="app">
 
+<div id="hero" class="hero morning">
+
+<div class="header">
+<div>
 <h1>Eternal Debt</h1>
-<div class="sub">ALPHA 0.1 · survive 20 days</div>
+<div id="subtitle" class="sub">ALPHA 0.3 · survive 20 days</div>
+</div>
+
+<button id="langBtn" class="lang" onclick="toggleLanguage()">RU</button>
+</div>
 
 <div class="stats">
 
 <div class="card">
-<div class="label">DAY</div>
+<div id="labelDay" class="label">DAY</div>
 <div id="day" class="value">1 / 20</div>
 </div>
 
 <div class="card">
-<div class="label">TIME</div>
+<div id="labelTime" class="label">TIME 🌅</div>
 <div id="time" class="value">07:00</div>
 </div>
 
 <div class="card">
-<div class="label">CASH</div>
+<div id="labelCash" class="label">CASH</div>
 <div id="cash" class="value">€300</div>
 </div>
 
 <div class="card">
-<div class="label">DEBT</div>
+<div id="labelDebt" class="label">DEBT</div>
 <div id="debt" class="value">€2,434</div>
 </div>
 
 <div class="card">
-<div class="label">ENERGY</div>
+<div id="labelEnergy" class="label">ENERGY</div>
 <div id="energy" class="value">100 ⚡</div>
 </div>
 
 </div>
+</div>
+
 
 <div id="home">
 
 <div class="panel">
+
 <div class="row">
+
 <div>
-<b>Today</b>
-<div class="small">07:00–23:00</div>
-</div>
-
-<button onclick="sleep()">Sleep →</button>
+<b id="todayTitle">Today</b>
+<div id="todayText" class="small">
+Choose what fits into your day.
 </div>
 </div>
 
-<div id="jobs"></div>
+<button id="sleepBtn" onclick="sleep()">
+Sleep →
+</button>
+
+</div>
+
+</div>
+
+
+<div id="jobs" class="jobs"></div>
+
 
 <div class="panel">
-<b>Debt Center</b>
-<div class="small">Choose what you pay and what you postpone.</div>
+
+<b id="debtCenterTitle">💸 Debt Center</b>
+
+<div id="debtCenterText" class="small">
+Choose what you pay and what you postpone.
+</div>
+
 <div id="bills"></div>
+
 </div>
 
 </div>
+
 
 <div id="work" class="panel hidden">
 
 <div class="row">
+
 <div>
-<div class="label">CURRENT JOB</div>
+<div id="currentJobLabel" class="label">CURRENT JOB</div>
 <div id="workTitle" class="jobTitle"></div>
 </div>
 
 <div>
-<div class="label">TIME</div>
+<div id="workTimeLabel" class="label">TIME</div>
 <div id="workTime" class="value"></div>
 </div>
+
 </div>
 
 <div class="bar">
@@ -196,476 +360,1533 @@ button:disabled{opacity:.3}
 
 </div>
 
+
+<div id="result" class="result hidden"></div>
+
 <div id="event" class="panel hidden"></div>
 
 <div id="ending" class="panel hidden"></div>
 
 </div>
 
+
 <script>
 
-const money=n=>"€"+Math.round(n).toLocaleString();
+const SAVE_KEY="eternalDebtAlpha03";
+
+let language="en";
+
+const text={
+
+en:{
+ day:"DAY",
+ time:"TIME",
+ cash:"CASH",
+ debt:"DEBT",
+ energy:"ENERGY",
+
+ subtitle:"ALPHA 0.3 · survive 20 days",
+
+ today:"Today",
+ todayText:"Choose what fits into your day.",
+
+ sleep:"Sleep →",
+
+ debtCenter:"💸 Debt Center",
+ debtCenterText:"Choose what you pay and what you postpone.",
+
+ start:"START",
+ unavailable:"UNAVAILABLE",
+
+ currentJob:"CURRENT JOB",
+
+ payNow:"PAY NOW",
+ pay100:"PAY €100",
+ pay500:"PAY €500",
+ payLater:"PAY LATER",
+
+ dueIn:"Due in",
+ overdue:"OVERDUE",
+ dueToday:"DUE TODAY",
+
+ fullOnly:"FULL PAYMENT ONLY",
+
+ shiftComplete:"SHIFT COMPLETE",
+ balanceBefore:"Balance before",
+ balanceAfter:"Balance after",
+ started:"Started",
+ finished:"Finished",
+ continue:"CONTINUE",
+
+ newDay:"NEW DAY",
+
+ ending:"20 DAYS SURVIVED",
+ playAgain:"PLAY AGAIN"
+},
+
+ru:{
+ day:"ДЕНЬ",
+ time:"ВРЕМЯ",
+ cash:"ДЕНЬГИ",
+ debt:"ДОЛГ",
+ energy:"ЭНЕРГИЯ",
+
+ subtitle:"ALPHA 0.3 · проживи 20 дней",
+
+ today:"Сегодня",
+ todayText:"Выбери, что ты успеешь сделать сегодня.",
+
+ sleep:"Спать →",
+
+ debtCenter:"💸 Центр долгов",
+ debtCenterText:"Решай, что платить сейчас, а что отложить.",
+
+ start:"НАЧАТЬ",
+ unavailable:"НЕДОСТУПНО",
+
+ currentJob:"ТЕКУЩАЯ РАБОТА",
+
+ payNow:"ОПЛАТИТЬ",
+ pay100:"ОПЛАТИТЬ €100",
+ pay500:"ОПЛАТИТЬ €500",
+ payLater:"ПОЗЖЕ",
+
+ dueIn:"Оплатить через",
+ overdue:"ПРОСРОЧЕНО",
+ dueToday:"ОПЛАТИТЬ СЕГОДНЯ",
+
+ fullOnly:"ТОЛЬКО ПОЛНАЯ ОПЛАТА",
+
+ shiftComplete:"СМЕНА ЗАВЕРШЕНА",
+ balanceBefore:"Баланс до",
+ balanceAfter:"Баланс после",
+ started:"Начало",
+ finished:"Конец",
+ continue:"ПРОДОЛЖИТЬ",
+
+ newDay:"НОВЫЙ ДЕНЬ",
+
+ ending:"20 ДНЕЙ ПРОЖИТО",
+ playAgain:"ИГРАТЬ СНОВА"
+}
+
+};
+
+
+function t(key){
+ return text[language][key];
+}
+
+
+function money(n){
+ return "€"+Math.round(n).toLocaleString();
+}
+
+
+function fmt(minutes){
+
+ let h=Math.floor(minutes/60);
+ let m=minutes%60;
+
+ return String(h).padStart(2,"0")
+ +":"
+ +String(m).padStart(2,"0");
+
+}
+
 
 let game={
+
  day:1,
  time:420,
+
  cash:300,
  energy:100,
+
  working:false,
+
  earned:0,
  paid:0,
  jobsDone:0,
+
  bills:[
-  {name:"Starting debt",amount:2000,due:30},
-  {name:"Mirror repair",amount:434,due:7}
- ]
+
+ {
+  id:1,
+  en:"Starting debt",
+  ru:"Начальный долг",
+  amount:2000,
+  due:30,
+  partial:true
+ },
+
+ {
+  id:2,
+  en:"Mirror repair",
+  ru:"Ремонт зеркала",
+  amount:434,
+  due:7,
+  partial:true
+ }
+
+ ],
+
+ nextId:3
+
 };
+
 
 const jobs=[
 
+
 {
- name:"🧺 Industrial Laundry",
+ id:"laundry",
+
+ en:"🧺 Industrial Laundry",
+ ru:"🧺 Индустриальная прачечная",
+
  hours:8,
  energy:55,
  pay:260,
+
  unlock:1,
+
  stages:[
-  ["Sort laundry",80,["Whites","Colors","Towels"]],
-  ["Load washers",80,["Washer A","Washer B","Washer C"]],
-  ["Add detergent",60,["Dose A","Dose B"]],
-  ["Choose programs",80,["Cotton","Towels","Delicate"]],
-  ["Move to dryers",100,["Dryer A","Dryer B","Dryer C"]],
-  ["Fold & pack",80,["Fold","Stack","Pack"]]
+
+ {
+  en:"Sort laundry",
+  ru:"Сортировка белья",
+  minutes:80,
+  buttons:["Whites","Colors","Towels"]
+ },
+
+ {
+  en:"Load washers",
+  ru:"Загрузить стиральные машины",
+  minutes:80,
+  buttons:["Washer A","Washer B","Washer C"]
+ },
+
+ {
+  en:"Add detergent",
+  ru:"Добавить средство",
+  minutes:60,
+  buttons:["Dose A","Dose B"]
+ },
+
+ {
+  en:"Choose programs",
+  ru:"Выбрать программы",
+  minutes:80,
+  buttons:["Cotton","Towels","Delicate"]
+ },
+
+ {
+  en:"Move to dryers",
+  ru:"Переложить в сушилки",
+  minutes:100,
+  buttons:["Dryer A","Dryer B","Dryer C"]
+ },
+
+ {
+  en:"Fold & pack",
+  ru:"Сложить и упаковать",
+  minutes:80,
+  buttons:["Fold","Stack","Pack"]
+ }
+
  ]
+
 },
 
+
 {
- name:"🧹 Apartment Cleaning",
+ id:"clean",
+
+ en:"🧹 Apartment Cleaning",
+ ru:"🧹 Уборка квартиры",
+
  hours:4,
  energy:25,
  pay:120,
+
  unlock:1,
+
  stages:[
-  ["Collect laundry",45,["Sheets","Towels","Trash"]],
-  ["Bathroom",55,["Sink","Mirror","Shower"]],
-  ["Make bed",50,["Sheet","Duvet","Pillows"]],
-  ["Kitchen",45,["Dishes","Counter","Bin"]],
-  ["Final check",45,["Vacuum","Towels","Keys"]]
+
+ {
+  en:"Collect laundry",
+  ru:"Собрать бельё",
+  minutes:45,
+  buttons:["Sheets","Towels","Trash"]
+ },
+
+ {
+  en:"Bathroom",
+  ru:"Ванная",
+  minutes:55,
+  buttons:["Sink","Mirror","Shower"]
+ },
+
+ {
+  en:"Make bed",
+  ru:"Заправить кровать",
+  minutes:50,
+  buttons:["Sheet","Duvet","Pillows"]
+ },
+
+ {
+  en:"Kitchen",
+  ru:"Кухня",
+  minutes:45,
+  buttons:["Dishes","Counter","Bin"]
+ },
+
+ {
+  en:"Final check",
+  ru:"Финальная проверка",
+  minutes:45,
+  buttons:["Vacuum","Towels","Keys"]
+ }
+
  ]
+
 },
 
+
 {
- name:"☕ Café Shift",
+ id:"cafe",
+
+ en:"☕ Café Shift",
+ ru:"☕ Смена в кафе",
+
  hours:8,
  energy:60,
  pay:240,
+
  unlock:1,
+
  stages:[
-  ["Open station",80,["Machine","Milk","Cups"]],
-  ["Breakfast rush",100,["Espresso","Latte","Toast"]],
-  ["Lunch rush",120,["Order 1","Order 2","Order 3"]],
-  ["Restock",70,["Beans","Milk","Napkins"]],
-  ["Afternoon",70,["Coffee","Cake","Bill"]],
-  ["Close",40,["Clean","Cash","Lock"]]
+
+ {
+  en:"Open station",
+  ru:"Открыть станцию",
+  minutes:80,
+  buttons:["Machine","Milk","Cups"]
+ },
+
+ {
+  en:"Breakfast rush",
+  ru:"Утренний наплыв",
+  minutes:100,
+  buttons:["Espresso","Latte","Toast"]
+ },
+
+ {
+  en:"Lunch rush",
+  ru:"Обеденный наплыв",
+  minutes:120,
+  buttons:["Order 1","Order 2","Order 3"]
+ },
+
+ {
+  en:"Restock",
+  ru:"Пополнить запасы",
+  minutes:70,
+  buttons:["Beans","Milk","Napkins"]
+ },
+
+ {
+  en:"Afternoon",
+  ru:"День",
+  minutes:70,
+  buttons:["Coffee","Cake","Bill"]
+ },
+
+ {
+  en:"Close",
+  ru:"Закрытие",
+  minutes:40,
+  buttons:["Clean","Cash","Lock"]
+ }
+
  ]
+
 },
 
+
 {
- name:"🔑 Guest Check-in",
+ id:"quick5",
+
+ en:"📞 Quick Client Call",
+ ru:"📞 Быстрый звонок",
+
+ hours:.75,
+ energy:5,
+ pay:25,
+
+ unlock:2,
+
+ stages:[
+
+ {
+  en:"Call client",
+  ru:"Позвонить клиенту",
+  minutes:45,
+  buttons:["Call"]
+ }
+
+ ]
+
+},
+
+
+{
+ id:"quick10",
+
+ en:"🔑 Key Handover",
+ ru:"🔑 Передача ключей",
+
+ hours:1.25,
+ energy:10,
+ pay:45,
+
+ unlock:3,
+
+ stages:[
+
+ {
+  en:"Prepare keys",
+  ru:"Подготовить ключи",
+  minutes:25,
+  buttons:["Keys"]
+ },
+
+ {
+  en:"Meet guest",
+  ru:"Встретить гостя",
+  minutes:25,
+  buttons:["Meet"]
+ },
+
+ {
+  en:"Finish",
+  ru:"Завершить",
+  minutes:25,
+  buttons:["Message"]
+ }
+
+ ]
+
+},
+
+
+{
+ id:"quick15",
+
+ en:"📦 Small Delivery",
+ ru:"📦 Маленькая доставка",
+
  hours:2,
  energy:15,
- pay:85,
- unlock:3,
- stages:[
-  ["Prepare",30,["Keys"]],
-  ["Meet guest",40,["Welcome"]],
-  ["Apartment tour",30,["Kitchen","Wi-Fi"]],
-  ["Finish",20,["Message"]]
- ]
-},
+ pay:70,
 
-{
- name:"🚗 Delivery Run",
- hours:3,
- energy:25,
- pay:110,
- unlock:5,
- stages:[
-  ["Pickup",40,["Collect"]],
-  ["Route",60,["Stop 1"]],
-  ["Second stop",50,["Stop 2"]],
-  ["Delivery",30,["Drop off"]]
- ]
-},
+ unlock:4,
 
-{
- name:"🧽 Office Cleaning",
- hours:5,
- energy:35,
- pay:155,
- unlock:7,
  stages:[
-  ["Trash",50,["Bins"]],
-  ["Desks",70,["Wipe"]],
-  ["Kitchen",60,["Clean"]],
-  ["Bathrooms",70,["Wash"]],
-  ["Floor",50,["Vacuum"]]
+
+ {
+  en:"Pickup",
+  ru:"Забрать",
+  minutes:40,
+  buttons:["Pickup"]
+ },
+
+ {
+  en:"Drive",
+  ru:"Доехать",
+  minutes:40,
+  buttons:["Drive"]
+ },
+
+ {
+  en:"Deliver",
+  ru:"Доставить",
+  minutes:40,
+  buttons:["Drop off"]
+ }
+
  ]
+
 }
 
 ];
+
 
 const events=[
- ["🚗 Workshop bill",459,5],
- ["🚦 Traffic fine",100,15],
- ["📱 Broken phone",280,6],
- ["🧾 Quarterly taxes",1200,10],
- ["🏠 Rent balance",380,8],
- ["💳 Credit card",720,12],
- ["🔧 Appliance repair",330,7],
- ["📦 Client refund",410,5]
+
+{
+ day:3,
+ en:"🚗 Workshop bill",
+ ru:"🚗 Счёт из сервиса",
+ amount:459,
+ deadline:5,
+ partial:false
+},
+
+{
+ day:5,
+ en:"🚦 Traffic fine",
+ ru:"🚦 Штраф",
+ amount:100,
+ deadline:15,
+ partial:true
+},
+
+{
+ day:7,
+ en:"📱 Broken phone",
+ ru:"📱 Сломанный телефон",
+ amount:280,
+ deadline:6,
+ partial:true
+},
+
+{
+ day:9,
+ en:"🧾 Quarterly taxes",
+ ru:"🧾 Налоги за квартал",
+ amount:1200,
+ deadline:10,
+ partial:true
+},
+
+{
+ day:12,
+ en:"🏠 Rent balance",
+ ru:"🏠 Доплата за жильё",
+ amount:380,
+ deadline:8,
+ partial:true
+},
+
+{
+ day:15,
+ en:"💳 Credit card",
+ ru:"💳 Кредитная карта",
+ amount:720,
+ deadline:12,
+ partial:true
+}
+
 ];
 
-function fmt(m){
- let h=Math.floor(m/60);
- let mm=m%60;
- return String(h).padStart(2,"0")+":"+String(mm).padStart(2,"0");
+
+function name(object){
+
+ return language==="ru"
+ ?object.ru
+ :object.en;
+
 }
 
+
 function debt(){
- return game.bills.reduce((a,b)=>a+b.amount,0);
+
+ return game.bills.reduce(
+ (sum,bill)=>sum+bill.amount,
+ 0
+ );
+
 }
+
+
+function updateSky(){
+
+ let hero=document.getElementById("hero");
+
+ hero.classList.remove(
+ "morning",
+ "day",
+ "evening",
+ "night"
+ );
+
+ let icon="";
+
+ if(game.time<600){
+
+  hero.classList.add("morning");
+  icon="🌅";
+
+ }
+
+ else if(game.time<1020){
+
+  hero.classList.add("day");
+  icon="☀️";
+
+ }
+
+ else if(game.time<1200){
+
+  hero.classList.add("evening");
+  icon="🌇";
+
+ }
+
+ else{
+
+  hero.classList.add("night");
+  icon="🌙";
+
+ }
+
+ document.getElementById("labelTime").textContent=
+ t("time")+" "+icon;
+
+}
+
 
 function render(){
 
- document.getElementById("day").textContent=game.day+" / 20";
- document.getElementById("time").textContent=fmt(game.time);
- document.getElementById("cash").textContent=money(game.cash);
- document.getElementById("debt").textContent=money(debt());
- document.getElementById("energy").textContent=game.energy+" ⚡";
+ updateSky();
+
+ document.getElementById("day").textContent=
+ game.day+" / 20";
+
+ document.getElementById("time").textContent=
+ fmt(game.time);
+
+ document.getElementById("cash").textContent=
+ money(game.cash);
+
+ document.getElementById("debt").textContent=
+ money(debt());
+
+ document.getElementById("energy").textContent=
+ game.energy+" ⚡";
+
+
+ document.getElementById("labelDay").textContent=
+ t("day");
+
+ document.getElementById("labelCash").textContent=
+ t("cash");
+
+ document.getElementById("labelDebt").textContent=
+ t("debt");
+
+ document.getElementById("labelEnergy").textContent=
+ t("energy");
+
+
+ document.getElementById("subtitle").textContent=
+ t("subtitle");
+
+
+ document.getElementById("todayTitle").textContent=
+ t("today");
+
+ document.getElementById("todayText").textContent=
+ t("todayText");
+
+ document.getElementById("sleepBtn").textContent=
+ t("sleep");
+
+
+ document.getElementById("debtCenterTitle").textContent=
+ t("debtCenter");
+
+ document.getElementById("debtCenterText").textContent=
+ t("debtCenterText");
+
+
+ document.getElementById("currentJobLabel").textContent=
+ t("currentJob");
+
+ document.getElementById("workTimeLabel").textContent=
+ t("time");
+
+
+ document.getElementById("langBtn").textContent=
+ language==="en"
+ ?"RU"
+ :"EN";
+
 
  renderJobs();
  renderBills();
 
- localStorage.setItem("eternalDebt",JSON.stringify(game));
+ localStorage.setItem(
+ SAVE_KEY,
+ JSON.stringify({
+  game,
+  language
+ })
+ );
+
 }
+
 
 function renderJobs(){
 
- let box=document.getElementById("jobs");
+ let box=
+ document.getElementById("jobs");
+
  box.innerHTML="";
 
- jobs.filter(j=>game.day>=j.unlock).forEach((j,index)=>{
 
- let minutes=j.hours*60;
+ jobs
+ .filter(job=>game.day>=job.unlock)
+ .forEach(job=>{
+
+
+ let duration=
+ Math.round(job.hours*60);
+
 
  let available=
- !game.working &&
- game.energy>=j.energy &&
- game.time+minutes<=1380;
 
- let div=document.createElement("div");
+ !game.working
+ &&
+ game.energy>=job.energy
+ &&
+ game.time+duration<=1380;
+
+
+ let div=
+ document.createElement("div");
+
  div.className="job";
 
+
  div.innerHTML=
- `<div class="jobTitle">${j.name}</div>
- <div class="small">${j.hours}h · −${j.energy} ⚡ · +${money(j.pay)}</div>`;
 
- let btn=document.createElement("button");
+ `<div class="jobTitle">
+ ${name(job)}
+ </div>
+
+ <div class="small">
+ ${job.hours}h · −${job.energy} ⚡ · +${money(job.pay)}
+ </div>`;
+
+
+ let btn=
+ document.createElement("button");
+
  btn.className="primary";
- btn.style.marginTop="10px";
- btn.textContent=available?"START":"UNAVAILABLE";
- btn.disabled=!available;
 
- btn.onclick=()=>startJob(j);
+ btn.style.marginTop="10px";
+
+ btn.textContent=
+ available
+ ?t("start")
+ :t("unavailable");
+
+ btn.disabled=
+ !available;
+
+
+ btn.onclick=()=>startJob(job);
+
 
  div.appendChild(btn);
+
  box.appendChild(div);
 
  });
 
 }
+
 
 function startJob(job){
 
+ const startCash=
+ game.cash;
+
+ const startTime=
+ game.time;
+
+
  game.working=true;
+
  game.energy-=job.energy;
 
- document.getElementById("home").classList.add("hidden");
- document.getElementById("work").classList.remove("hidden");
 
- document.getElementById("workTitle").textContent=job.name;
- document.getElementById("workTime").textContent=fmt(game.time);
+ document
+ .getElementById("home")
+ .classList.add("hidden");
 
- buildStages(job);
+
+ document
+ .getElementById("work")
+ .classList.remove("hidden");
+
+
+ document.getElementById("workTitle").textContent=
+ name(job);
+
+
+ document.getElementById("workTime").textContent=
+ fmt(game.time);
+
+
+ document.getElementById("progress").style.width=
+ "0%";
+
+
+ buildStages(
+ job,
+ startCash,
+ startTime
+ );
+
+ render();
 
 }
 
-function buildStages(job){
 
- let box=document.getElementById("stages");
+function buildStages(
+ job,
+ startCash,
+ startTime
+){
+
+ let box=
+ document.getElementById("stages");
+
  box.innerHTML="";
 
- let finished=0;
 
- job.stages.forEach((stage,index)=>{
+ let completedStages=0;
 
- let div=document.createElement("div");
+
+ job.stages.forEach(
+ (stage,index)=>{
+
+
+ let div=
+ document.createElement("div");
+
  div.className="stage";
 
- div.innerHTML=`<b>${index+1}. ${stage[0]}</b>`;
 
- let actions=document.createElement("div");
+ div.innerHTML=
+
+ `<b>
+ ${index+1}. ${name(stage)}
+ </b>`;
+
+
+ let actions=
+ document.createElement("div");
+
  actions.className="actions";
 
- let taps=0;
 
- stage[2].forEach(label=>{
+ let completedButtons=0;
 
-  let b=document.createElement("button");
-  b.textContent=label;
 
-  b.onclick=()=>{
+ stage.buttons.forEach(label=>{
 
-   if(b.disabled)return;
 
-   b.disabled=true;
-   b.textContent="✓ "+label;
+ let button=
+ document.createElement("button");
 
-   taps++;
 
-   if(taps===stage[2].length){
+ button.textContent=
+ label;
 
-    div.classList.add("done");
 
-    game.time+=stage[1];
+ button.onclick=()=>{
 
-    finished++;
 
-    document.getElementById("workTime").textContent=fmt(game.time);
+ if(button.disabled)return;
 
-    document.getElementById("progress").style.width=
-    (finished/job.stages.length*100)+"%";
 
-    if(finished===job.stages.length){
-     finishJob(job);
-    }
+ button.disabled=true;
 
-   }
+ button.textContent=
+ "✓ "+label;
 
-  };
 
-  actions.appendChild(b);
+ completedButtons++;
+
+
+ if(
+ completedButtons===
+ stage.buttons.length
+ ){
+
+
+ div.classList.add("done");
+
+
+ game.time+=
+ stage.minutes;
+
+
+ completedStages++;
+
+
+ document
+ .getElementById("workTime")
+ .textContent=
+ fmt(game.time);
+
+
+ document
+ .getElementById("progress")
+ .style.width=
+
+ (completedStages/
+ job.stages.length*
+ 100)+"%";
+
+
+ updateSky();
+
+
+ if(
+ completedStages===
+ job.stages.length
+ ){
+
+ finishJob(
+ job,
+ startCash,
+ startTime
+ );
+
+ }
+
+ }
+
+ };
+
+
+ actions.appendChild(button);
 
  });
 
+
  div.appendChild(actions);
+
  box.appendChild(div);
 
  });
 
 }
 
-function finishJob(job){
+
+function finishJob(
+ job,
+ startCash,
+ startTime
+){
 
  game.cash+=job.pay;
+
  game.earned+=job.pay;
+
  game.jobsDone++;
+
+ game.working=false;
+
 
  setTimeout(()=>{
 
-  game.working=false;
 
-  document.getElementById("work").classList.add("hidden");
-  document.getElementById("home").classList.remove("hidden");
+ document
+ .getElementById("work")
+ .classList.add("hidden");
 
-  document.getElementById("progress").style.width="0%";
 
-  showEvent(
-   "SHIFT COMPLETE",
-   `${job.name}<br><span class="green">+${money(job.pay)}</span>`
-  );
+ showJobResult(
+ job,
+ startCash,
+ startTime
+ );
 
-  render();
 
- },600);
+ render();
+
+
+ },350);
 
 }
+
+
+function showJobResult(
+ job,
+ startCash,
+ startTime
+){
+
+ let result=
+ document.getElementById("result");
+
+
+ result.classList.remove("hidden");
+
+
+ result.innerHTML=
+
+ `<div class="resultTop">
+
+ <div>
+
+ <div class="label">
+ ${t("shiftComplete")}
+ </div>
+
+ <div class="jobTitle">
+ ${name(job)}
+ </div>
+
+ <div class="small">
+ ${t("started")}:
+ <b>${fmt(startTime)}</b>
+ <br>
+ ${t("finished")}:
+ <b>${fmt(game.time)}</b>
+ </div>
+
+ </div>
+
+ <div class="resultGain">
+ +${money(job.pay)}
+ </div>
+
+ </div>
+
+
+ <div class="resultGrid">
+
+ <div class="card">
+
+ <div class="label">
+ ${t("balanceBefore")}
+ </div>
+
+ <div class="value">
+ ${money(startCash)}
+ </div>
+
+ </div>
+
+
+ <div class="card">
+
+ <div class="label">
+ ${t("balanceAfter")}
+ </div>
+
+ <div class="value">
+ ${money(game.cash)}
+ </div>
+
+ </div>
+
+ </div>
+
+
+ <button
+ class="primary"
+ style="width:100%;margin-top:14px"
+ onclick="closeResult()">
+
+ ${t("continue")}
+
+ </button>`;
+
+}
+
+
+function closeResult(){
+
+ document
+ .getElementById("result")
+ .classList.add("hidden");
+
+ document
+ .getElementById("home")
+ .classList.remove("hidden");
+
+ document
+ .getElementById("progress")
+ .style.width="0%";
+
+ render();
+
+}
+
 
 function renderBills(){
 
- let box=document.getElementById("bills");
+ let box=
+ document.getElementById("bills");
+
  box.innerHTML="";
 
- game.bills.forEach((bill,index)=>{
 
- let days=bill.due-game.day;
+ game.bills.forEach(
+ (bill,index)=>{
 
- let status=
- days<0
- ?`<span class="red">OVERDUE ${-days}d</span>`
- :days===0
- ?`<span class="orange">DUE TODAY</span>`
- :`Due in ${days}d`;
 
- let div=document.createElement("div");
+ let days=
+ bill.due-game.day;
+
+
+ let status;
+
+
+ if(days<0){
+
+ status=
+ `<span class="red">
+ ${t("overdue")} ${Math.abs(days)}d
+ </span>`;
+
+ }
+
+ else if(days===0){
+
+ status=
+ `<span class="orange">
+ ${t("dueToday")}
+ </span>`;
+
+ }
+
+ else{
+
+ status=
+ `${t("dueIn")} ${days}d`;
+
+ }
+
+
+ let div=
+ document.createElement("div");
+
  div.className="bill";
 
+
  div.innerHTML=
+
  `<div class="row">
+
  <div>
- <b>${bill.name}</b>
- <div class="small">${status}</div>
+
+ <b>
+ ${name(bill)}
+ </b>
+
+ <div class="small">
+ ${status}
  </div>
- <b>${money(bill.amount)}</b>
+
+ ${
+ bill.partial
+ ?''
+ :`<div class="small orange">
+ ${t("fullOnly")}
+ </div>`
+ }
+
+ </div>
+
+ <b>
+ ${money(bill.amount)}
+ </b>
+
  </div>`;
 
- let actions=document.createElement("div");
+
+ let actions=
+ document.createElement("div");
+
  actions.className="actions";
 
- let pay=document.createElement("button");
- pay.textContent="PAY NOW";
- pay.disabled=game.cash<bill.amount;
 
- pay.onclick=()=>payBill(index,bill.amount);
+ let full=
+ document.createElement("button");
 
- let partial=document.createElement("button");
- partial.textContent="PAY €100";
- partial.disabled=game.cash<100 || bill.amount<100;
+ full.textContent=
+ t("payNow");
 
- partial.onclick=()=>payBill(index,100);
+ full.disabled=
+ game.cash<bill.amount;
 
- let later=document.createElement("button");
- later.textContent="PAY LATER";
+ full.onclick=()=>payBill(
+ index,
+ bill.amount
+ );
 
- actions.append(pay,partial,later);
+ actions.appendChild(full);
+
+
+ if(bill.partial){
+
+
+ let pay100=
+ document.createElement("button");
+
+ pay100.textContent=
+ t("pay100");
+
+ pay100.disabled=
+ game.cash<100
+ ||
+ bill.amount<100;
+
+ pay100.onclick=()=>payBill(
+ index,
+ 100
+ );
+
+ actions.appendChild(pay100);
+
+
+ let pay500=
+ document.createElement("button");
+
+ pay500.textContent=
+ t("pay500");
+
+ pay500.disabled=
+ game.cash<500
+ ||
+ bill.amount<500;
+
+ pay500.onclick=()=>payBill(
+ index,
+ 500
+ );
+
+ actions.appendChild(pay500);
+
+ }
+
+
+ let later=
+ document.createElement("button");
+
+ later.textContent=
+ t("payLater");
+
+ later.onclick=()=>{
+
+ later.disabled=true;
+
+ };
+
+
+ actions.appendChild(later);
 
  div.appendChild(actions);
+
  box.appendChild(div);
 
  });
 
 }
 
-function payBill(index,amount){
 
- let b=game.bills[index];
+function payBill(
+ index,
+ amount
+){
 
- amount=Math.min(amount,b.amount);
+ let bill=
+ game.bills[index];
+
+
+ amount=
+ Math.min(
+ amount,
+ bill.amount
+ );
+
 
  game.cash-=amount;
- game.paid+=amount;
- b.amount-=amount;
 
- if(b.amount<=0){
-  game.bills.splice(index,1);
+ game.paid+=amount;
+
+ bill.amount-=amount;
+
+
+ if(bill.amount<=0){
+
+ game.bills.splice(
+ index,
+ 1
+ );
+
  }
+
 
  render();
 
 }
+
 
 function sleep(){
 
+ if(game.working)return;
+
+
  if(game.day>=20){
-  finishGame();
-  return;
+
+ finishGame();
+
+ return;
+
  }
+
 
  game.day++;
+
  game.time=420;
+
  game.energy=100;
 
- if(game.day%2===0){
 
-  let e=events[(game.day/2-1)%events.length];
+ events.forEach(event=>{
 
-  game.bills.push({
-   name:e[0],
-   amount:e[1],
-   due:game.day+e[2]
-  });
 
-  showEvent(
-   "NEW BILL",
-   `${e[0]}<br><b>${money(e[1])}</b><br>
-   <span class="small">Pay before Day ${game.day+e[2]}</span>`
-  );
+ if(event.day===game.day){
+
+
+ game.bills.push({
+
+ id:game.nextId++,
+
+ en:event.en,
+ ru:event.ru,
+
+ amount:event.amount,
+
+ due:
+ game.day+
+ event.deadline,
+
+ partial:
+ event.partial
+
+ });
+
+
+ showEvent(
+ t("newDay"),
+ `${name(event)}
+ <br>
+ <b>${money(event.amount)}</b>`
+ );
 
  }
 
- game.bills.forEach(b=>{
+ });
 
-  if(game.day===b.due+1){
-   let fee=Math.max(10,Math.round(b.amount*.05));
-   b.amount+=fee;
-  }
+
+ game.bills.forEach(bill=>{
+
+
+ if(
+ game.day===
+ bill.due+1
+ ){
+
+ let fee=
+ Math.max(
+ 10,
+ Math.round(
+ bill.amount*.05
+ )
+ );
+
+ bill.amount+=fee;
+
+ }
 
  });
+
 
  render();
 
 }
 
-function showEvent(title,text){
 
- let e=document.getElementById("event");
+function showEvent(
+ title,
+ content
+){
 
- e.innerHTML=
- `<b>${title}</b>
- <div style="margin-top:8px">${text}</div>`;
+ let event=
+ document.getElementById("event");
 
- e.classList.remove("hidden");
+
+ event.innerHTML=
+
+ `<div class="newDay">
+
+ <div class="label">
+ ${title}
+ </div>
+
+ <div style="
+ font-size:22px;
+ font-weight:800;
+ margin-top:7px
+ ">
+
+ ${content}
+
+ </div>
+
+ </div>`;
+
+
+ event.classList.remove("hidden");
+
 
  setTimeout(()=>{
-  e.classList.add("hidden");
- },2500);
+
+ event.classList.add("hidden");
+
+ },2400);
 
 }
+
+
+function toggleLanguage(){
+
+ language=
+ language==="en"
+ ?"ru"
+ :"en";
+
+ render();
+
+}
+
 
 function finishGame(){
 
- document.getElementById("home").classList.add("hidden");
+ document
+ .getElementById("home")
+ .classList.add("hidden");
 
- let end=document.getElementById("ending");
- end.classList.remove("hidden");
 
- end.innerHTML=
- `<h2>20 DAYS SURVIVED</h2>
+ let ending=
+ document.getElementById("ending");
 
- <p>Cash: <b>${money(game.cash)}</b></p>
- <p>Debt: <b>${money(debt())}</b></p>
- <p>Total earned: <b>${money(game.earned)}</b></p>
- <p>Debt paid: <b>${money(game.paid)}</b></p>
- <p>Jobs completed: <b>${game.jobsDone}</b></p>
 
- <button class="primary" onclick="restart()">PLAY AGAIN</button>`;
+ ending.classList.remove("hidden");
+
+
+ ending.innerHTML=
+
+ `<h2>
+ ${t("ending")}
+ </h2>
+
+ <p>
+ ${t("cash")}:
+ <b>${money(game.cash)}</b>
+ </p>
+
+ <p>
+ ${t("debt")}:
+ <b>${money(debt())}</b>
+ </p>
+
+ <p>
+ Total earned:
+ <b>${money(game.earned)}</b>
+ </p>
+
+ <p>
+ Debt paid:
+ <b>${money(game.paid)}</b>
+ </p>
+
+ <p>
+ Jobs:
+ <b>${game.jobsDone}</b>
+ </p>
+
+ <button
+ class="primary"
+ onclick="restart()">
+
+ ${t("playAgain")}
+
+ </button>`;
+
 }
+
 
 function restart(){
- localStorage.removeItem("eternalDebt");
+
+ localStorage.removeItem(
+ SAVE_KEY
+ );
+
  location.reload();
+
 }
 
-let saved=localStorage.getItem("eternalDebt");
+
+let saved=
+ localStorage.getItem(
+ SAVE_KEY
+ );
+
 
 if(saved){
+
  try{
-  game=JSON.parse(saved);
- }catch(e){}
+
+ let parsed=
+ JSON.parse(saved);
+
+ game=
+ parsed.game||game;
+
+ language=
+ parsed.language||"en";
+
+ }
+
+ catch(e){}
+
 }
+
 
 setInterval(()=>{
 
- if(!game.working && game.time<1380){
+ if(
+ !game.working
+ &&
+ game.time<1380
+ ){
 
-  game.time++;
+ game.time++;
 
-  document.getElementById("time").textContent=fmt(game.time);
+ document
+ .getElementById("time")
+ .textContent=
+ fmt(game.time);
+
+ updateSky();
 
  }
 
 },1000);
+
 
 render();
 
